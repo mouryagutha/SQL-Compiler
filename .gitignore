@@ -41,6 +41,21 @@ test_api.py
 test_routes.py
 check_backend.py
 
+# Documentation (keeping only essential docs in repo)
+CHECKLIST.md
+DEPLOYMENT_GUIDE.md
+FIREBASE_SETUP.md
+FIXES_APPLIED.md
+GOOGLE_SIGNIN_SETUP.md
+PROJECT_SUMMARY.md
+QUERY_FIX.md
+RAILWAY_SETUP.md
+SAMPLE_QUERIES.md
+DOCKER_REMOVAL_SUMMARY.md
+
+# Batch files (Windows helper scripts)
+*.bat
+
 # Logs
 *.log
 npm-debug.log*
