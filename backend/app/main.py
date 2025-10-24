@@ -36,8 +36,8 @@ app.add_middleware(
         "http://localhost:3000",
         "http://localhost:3001",
         "http://localhost:5173",  # Vite dev server
-        "https://*.vercel.app",  # Allow all Vercel deployments
-        "https://sql-compiler-frontend.vercel.app",  # Your Vercel frontend
+        "https://sql-compiler-y7zn.vercel.app",  # Your actual Vercel frontend
+        "https://sql-compiler-frontend.vercel.app",  # Alternative frontend URL
     ],
     allow_credentials=True,
     allow_methods=["*"],
