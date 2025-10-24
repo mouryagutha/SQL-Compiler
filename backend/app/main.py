@@ -15,7 +15,7 @@ from app.models import (
 from app.database import (
     execute_query, get_table_names, get_table_info,
     create_user, get_user_by_username, save_query_history,
-    get_user_query_history
+    get_user_query_history, ensure_database_exists
 )
 from app.auth import (
     verify_password, get_password_hash, create_access_token,
@@ -28,6 +28,17 @@ app = FastAPI(
     description="Backend API for SQL query execution and table exploration",
     version="1.0.0"
 )
+
+# Startup event to ensure database is initialized
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database on startup"""
+    print("=" * 50)
+    print("FastAPI Application Starting...")
+    print("=" * 50)
+    ensure_database_exists()
+    print("Database initialization check complete")
+    print("=" * 50)
 
 # CORS configuration
 app.add_middleware(
