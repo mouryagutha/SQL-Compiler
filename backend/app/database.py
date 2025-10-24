@@ -9,9 +9,19 @@ import os
 DATABASE_URL = os.getenv('DATABASE_URL', 'sql_runner.db')
 
 
+def ensure_database_exists():
+    """Ensure database file exists and is initialized"""
+    if not os.path.exists(DATABASE_URL):
+        # Create database if it doesn't exist
+        conn = sqlite3.connect(DATABASE_URL)
+        conn.close()
+        print(f"Created database at {DATABASE_URL}")
+
+
 @contextmanager
 def get_db_connection():
     """Context manager for database connections"""
+    ensure_database_exists()
     conn = sqlite3.connect(DATABASE_URL)
     conn.row_factory = sqlite3.Row  # Access columns by name
     try:

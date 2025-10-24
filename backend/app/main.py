@@ -142,39 +142,47 @@ async def execute_sql_query(
     Execute a SQL query and return results
     No authentication required (using Firebase on frontend)
     """
-    query = query_request.query.strip()
-    
-    # Prevent dangerous operations on system tables
-    dangerous_keywords = ["DROP TABLE users", "DROP TABLE query_history", "DELETE FROM users", "DELETE FROM query_history"]
-    query_upper = query.upper()
-    for keyword in dangerous_keywords:
-        if keyword in query_upper:
-            error_msg = "Operation not allowed on system tables"
-            raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail=error_msg
-            )
-    
-    # Execute query and measure time
-    start_time = time.time()
-    success, data, error, columns = execute_query(query)
-    execution_time = time.time() - start_time
-    
-    # Note: Query history is now stored on frontend with Firebase
-    
-    if success:
-        return {
-            "success": True,
-            "data": data,
-            "columns": columns,
-            "row_count": len(data) if data else 0,
-            "execution_time": round(execution_time, 3)
-        }
-    else:
+    try:
+        query = query_request.query.strip()
+        
+        # Prevent dangerous operations on system tables
+        dangerous_keywords = ["DROP TABLE users", "DROP TABLE query_history", "DELETE FROM users", "DELETE FROM query_history"]
+        query_upper = query.upper()
+        for keyword in dangerous_keywords:
+            if keyword in query_upper:
+                error_msg = "Operation not allowed on system tables"
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail=error_msg
+                )
+        
+        # Execute query and measure time
+        start_time = time.time()
+        success, data, error, columns = execute_query(query)
+        execution_time = time.time() - start_time
+        
+        # Note: Query history is now stored on frontend with Firebase
+        
+        if success:
+            return {
+                "success": True,
+                "data": data,
+                "columns": columns,
+                "row_count": len(data) if data else 0,
+                "execution_time": round(execution_time, 3)
+            }
+        else:
+            return {
+                "success": False,
+                "error": error,
+                "execution_time": round(execution_time, 3)
+            }
+    except Exception as e:
+        # Catch any unexpected errors to prevent crashes
         return {
             "success": False,
-            "error": error,
-            "execution_time": round(execution_time, 3)
+            "error": f"Server error: {str(e)}",
+            "execution_time": 0
         }
 
 
