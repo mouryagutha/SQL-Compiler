@@ -11,9 +11,9 @@ A modern SQL query execution platform with a Next.js frontend and FastAPI backen
 - **Error Handling**: Comprehensive error messages for invalid queries
 
 ### Bonus Features ✨
-- **User Authentication**: Secure login/signup system with JWT tokens
-- **Recent Queries History**: Track and re-run your recent SQL queries
-- **Docker Support**: Complete containerization with Docker Compose
+- **Firebase Authentication**: Secure login/signup with Email/Password and Google Sign-In
+- **Recent Queries History**: Track and re-run your recent SQL queries (stored locally)
+- **Cloud Deployment**: Ready to deploy on Vercel (frontend) and Railway (backend)
 
 ## Tech Stack
 
@@ -28,9 +28,13 @@ A modern SQL query execution platform with a Next.js frontend and FastAPI backen
 ### Backend
 - **FastAPI** (Python)
 - **SQLite** database
-- **JWT** authentication
 - **Pydantic** for data validation
 - **CORS** middleware
+
+### Authentication
+- **Firebase** for user authentication
+- **Google Sign-In** OAuth 2.0
+- **Email/Password** authentication
 
 ## Project Structure
 
@@ -44,16 +48,16 @@ sql-runner/
 │   │   └── models.py         # Pydantic models
 │   ├── sql_runner.db         # SQLite database
 │   ├── requirements.txt      # Python dependencies
-│   └── Dockerfile
+│   ├── Procfile              # Railway deployment
+│   └── railway.json          # Railway config
 ├── frontend/
 │   ├── src/
 │   │   ├── app/              # Next.js app directory
 │   │   ├── components/       # React components
-│   │   └── lib/              # Utilities
+│   │   └── lib/              # Utilities & Firebase
 │   ├── package.json
-│   ├── tailwind.config.js
-│   └── Dockerfile
-├── docker-compose.yml
+│   └── tailwind.config.js
+├── DEPLOYMENT_GUIDE.md       # Hosting instructions
 └── README.md
 ```
 
@@ -63,9 +67,9 @@ sql-runner/
 - Python 3.9+
 - Node.js 18+
 - npm or yarn
-- Docker & Docker Compose (optional)
+- Firebase account (for authentication)
 
-### Option 1: Manual Setup
+### Local Development Setup
 
 #### 1. Database Setup
 
@@ -115,19 +119,13 @@ npm run dev
 
 The frontend will be available at `http://localhost:3000`
 
-### Option 2: Docker Setup (Recommended)
+#### 4. Firebase Configuration
 
-Simply run from the root directory:
-
-```bash
-docker-compose up --build
-```
-
-This will:
-- Build and start both frontend and backend containers
-- Set up the database automatically
-- Frontend: `http://localhost:3000`
-- Backend API: `http://localhost:8000`
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Create a new project or use existing one
+3. Enable Authentication → Email/Password and Google Sign-In
+4. Add `localhost` to authorized domains
+5. See `FIREBASE_SETUP.md` for detailed instructions
 - API Docs: `http://localhost:8000/docs`
 
 ## Usage

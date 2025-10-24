@@ -48,14 +48,12 @@ npm run dev
 
 Frontend will be available at: http://localhost:3000
 
-### 3. Using Docker (Easiest)
+## Firebase Configuration
 
-```bash
-# From root directory
-docker-compose up --build
-```
-
-This will start both frontend and backend automatically.
+Before running the app, make sure to:
+1. Enable Google Sign-In in Firebase Console
+2. Add localhost to authorized domains
+3. See FIREBASE_SETUP.md for details
 
 ## Default Test Account
 
