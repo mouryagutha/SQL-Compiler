@@ -4,8 +4,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python start.py",
-    "healthcheckPath": "/health",
-    "healthcheckTimeout": 100
+    "startCommand": "python setup_database.py && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
   }
 }
