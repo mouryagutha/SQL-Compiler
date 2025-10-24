@@ -283,7 +283,7 @@ export default function SQLRunner({ onLogout }: SQLRunnerProps) {
                   <Database className="w-16 h-16 mx-auto mb-4 opacity-50" />
                   <p className="text-lg font-medium mb-2">No results yet</p>
                   <p className="text-sm">
-                    Write a SQL query and click &quot;Run Query&quot; to see results
+                    Write a SQL query and click &quot;Run Query&quot; to see results.
                   </p>
                 </div>
               </div>
