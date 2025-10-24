@@ -10,12 +10,29 @@ DATABASE_URL = os.getenv('DATABASE_URL', 'sql_runner.db')
 
 
 def ensure_database_exists():
-    """Ensure database file exists and is initialized"""
+    """Ensure database file exists and is initialized with tables"""
+    needs_setup = False
+    
+    # Check if database file exists
     if not os.path.exists(DATABASE_URL):
-        # Create database if it doesn't exist
+        needs_setup = True
+        print(f"Database file not found, will create at {DATABASE_URL}")
+    else:
+        # Check if tables exist
         conn = sqlite3.connect(DATABASE_URL)
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Customers'")
+        if not cursor.fetchone():
+            needs_setup = True
+            print("Database exists but Customers table not found, will reinitialize")
         conn.close()
-        print(f"Created database at {DATABASE_URL}")
+    
+    # Run setup if needed
+    if needs_setup:
+        print("Running database setup...")
+        import setup_database
+        setup_database.setup_database()
+        print("Database setup completed")
 
 
 @contextmanager
