@@ -3,8 +3,10 @@
  */
 import axios, { AxiosError } from 'axios';
 
-// Hardcoded API URL for now (environment variables require server restart)
-const API_URL = 'http://localhost:8000';
+// API URL - Use Render backend in production, localhost in development
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://sql-compiler-1.onrender.com'
+  : 'http://localhost:8000';
 
 // Log API URL for debugging
 console.log('API URL:', API_URL);
