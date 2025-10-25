@@ -12,31 +12,37 @@ interface TableExplorerProps {
 export default function TableExplorer({ tables, selectedTable, onTableClick }: TableExplorerProps) {
   return (
     <div className="p-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-        <Table className="w-5 h-5" />
-        Available Tables
-      </h2>
+      <div className="mb-6">
+        <h2 className="text-lg font-bold text-gray-900 mb-1 flex items-center gap-2">
+          <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-indigo-600 rounded-lg flex items-center justify-center">
+            <Table className="w-4 h-4 text-white" />
+          </div>
+          Database Tables
+        </h2>
+        <p className="text-xs text-gray-500 ml-10">Click to explore schema</p>
+      </div>
 
       <div className="space-y-2">
         {tables.map((table) => (
           <button
             key={table}
             onClick={() => onTableClick(table)}
-            className={`w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center justify-between ${
+            className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 flex items-center justify-between shadow-sm ${
               selectedTable?.table_name === table
-                ? 'bg-primary-50 text-primary-700 border border-primary-200'
-                : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-transparent'
+                ? 'bg-gradient-to-r from-primary-50 to-indigo-50 text-primary-700 border-2 border-primary-300 shadow-md scale-105'
+                : 'bg-white text-gray-700 hover:bg-gray-50 hover:shadow-md border-2 border-gray-200 hover:border-primary-200'
             }`}
           >
-            <span className="font-medium">{table}</span>
-            <ChevronRight className="w-4 h-4" />
+            <span className="font-semibold">{table}</span>
+            <ChevronRight className={`w-4 h-4 transition-transform ${selectedTable?.table_name === table ? 'rotate-90' : ''}`} />
           </button>
         ))}
       </div>
 
       {selectedTable && (
-        <div className="mt-6 border-t border-gray-200 pt-6">
-          <h3 className="text-sm font-semibold text-gray-900 mb-3">
+        <div className="mt-6 border-t-2 border-primary-100 pt-6 bg-gradient-to-b from-primary-50/30 to-transparent p-4 rounded-lg">
+          <h3 className="text-sm font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <div className="w-1 h-4 bg-gradient-to-b from-primary-500 to-indigo-600 rounded"></div>
             {selectedTable.table_name} Schema
           </h3>
 
@@ -44,19 +50,19 @@ export default function TableExplorer({ tables, selectedTable, onTableClick }: T
             {selectedTable.columns.map((column) => (
               <div
                 key={column.name}
-                className="bg-gray-50 px-3 py-2 rounded text-sm"
+                className="bg-white px-3 py-2 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow text-sm"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono font-medium text-gray-900">
+                  <span className="font-mono font-semibold text-gray-900">
                     {column.name}
                   </span>
                   {column.primary_key && (
-                    <span className="text-xs bg-primary-100 text-primary-700 px-2 py-0.5 rounded">
+                    <span className="text-xs bg-gradient-to-r from-primary-500 to-indigo-600 text-white px-2 py-0.5 rounded font-semibold">
                       PK
                     </span>
                   )}
                 </div>
-                <div className="text-gray-600 text-xs mt-1">
+                <div className="text-gray-600 text-xs mt-1 font-medium">
                   {column.type}
                   {column.nullable && ' • Nullable'}
                 </div>
@@ -64,8 +70,8 @@ export default function TableExplorer({ tables, selectedTable, onTableClick }: T
             ))}
           </div>
 
-          <div className="text-xs text-gray-600 bg-gray-50 px-3 py-2 rounded">
-            <strong>Total Rows:</strong> {selectedTable.row_count}
+          <div className="text-xs text-gray-700 bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-2 rounded-lg border border-blue-200 font-medium">
+            <strong className="text-primary-700">Total Rows:</strong> {selectedTable.row_count}
           </div>
 
           {selectedTable.sample_data.length > 0 && (

@@ -148,17 +148,17 @@ export default function SQLRunner({ onLogout }: SQLRunnerProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
+      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 shadow-sm px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
+            <div className="w-10 h-10 bg-gradient-to-br from-primary-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-md">
               <Database className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">SQL Runner</h1>
-              <p className="text-sm text-gray-600">Welcome, {username}</p>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-gray-900 to-primary-700 bg-clip-text text-transparent">SQL Runner</h1>
+              <p className="text-sm text-gray-600">Welcome, <span className="font-semibold text-primary-600">{username}</span></p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -188,7 +188,7 @@ export default function SQLRunner({ onLogout }: SQLRunnerProps) {
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
         {/* Sidebar - Table Explorer */}
-        <aside className="w-80 bg-white border-r border-gray-200 overflow-y-auto">
+        <aside className="w-96 bg-gradient-to-b from-white to-gray-50 border-r border-gray-200 shadow-lg overflow-y-auto">
           <TableExplorer
             tables={tables}
             selectedTable={selectedTable}
@@ -199,7 +199,7 @@ export default function SQLRunner({ onLogout }: SQLRunnerProps) {
         {/* Main Area */}
         <main className="flex-1 flex flex-col overflow-hidden">
           {/* Query Editor */}
-          <div className="bg-white border-b border-gray-200 p-6">
+          <div className="bg-white/90 backdrop-blur-sm border-b border-gray-200 p-6 shadow-sm">
             <div className="mb-3 flex items-center justify-between">
               <label className="block text-sm font-medium text-gray-700">
                 SQL Query
@@ -225,19 +225,19 @@ export default function SQLRunner({ onLogout }: SQLRunnerProps) {
             <textarea
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full h-32 px-4 py-3 border border-gray-300 rounded-lg font-mono text-sm text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none resize-none"
+              className="w-full h-32 px-4 py-3 border-2 border-gray-300 rounded-lg font-mono text-sm text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-400 outline-none resize-none bg-white shadow-sm"
               placeholder="Enter your SQL query here..."
               spellCheck={false}
             />
           </div>
 
           {/* Results Area */}
-          <div className="flex-1 overflow-auto p-6">
+          <div className="flex-1 overflow-auto p-6 bg-gradient-to-br from-gray-50/50 to-blue-50/30">
             {loading && (
               <div className="flex items-center justify-center h-64">
                 <div className="text-center">
                   <Loader2 className="w-12 h-12 text-primary-600 animate-spin mx-auto mb-4" />
-                  <p className="text-gray-600">Executing query...</p>
+                  <p className="text-gray-600 font-medium">Executing query...</p>
                 </div>
               </div>
             )}
