@@ -14,7 +14,7 @@ export default function Home() {
     const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
       if (user) {
         setIsAuthenticated(true);
-        localStorage.setItem('username', user.email || 'User');
+        localStorage.setItem('username', user.displayName || user.email?.split('@')[0] || 'User');
       } else {
         setIsAuthenticated(false);
         localStorage.removeItem('username');

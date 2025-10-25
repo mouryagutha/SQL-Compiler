@@ -35,7 +35,7 @@ export default function AuthPage({ onLogin }: AuthPageProps) {
             email: user.email,
             displayName: user.displayName || user.email
           }));
-          localStorage.setItem('username', user.email || 'User');
+          localStorage.setItem('username', user.displayName || user.email?.split('@')[0] || 'User');
           onLogin();
         }
       } else {
@@ -52,7 +52,7 @@ export default function AuthPage({ onLogin }: AuthPageProps) {
             email: user.email,
             displayName: user.displayName || user.email
           }));
-          localStorage.setItem('username', user.email || 'User');
+          localStorage.setItem('username', user.displayName || user.email?.split('@')[0] || 'User');
           onLogin();
         }
       }
