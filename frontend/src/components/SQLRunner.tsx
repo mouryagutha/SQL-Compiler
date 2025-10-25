@@ -20,6 +20,7 @@ export default function SQLRunner({ onLogout }: SQLRunnerProps) {
   const [selectedTable, setSelectedTable] = useState<TableInfo | null>(null);
   const [queryHistory, setQueryHistory] = useState<QueryHistory[]>([]);
   const [showHistory, setShowHistory] = useState(false);
+  const [queryBoxHeight, setQueryBoxHeight] = useState(128); // 128px = h-32
   const username = localStorage.getItem('username') || 'User';
 
   // Load tables on mount
@@ -222,13 +223,22 @@ export default function SQLRunner({ onLogout }: SQLRunnerProps) {
                 )}
               </button>
             </div>
-            <textarea
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-full h-32 px-4 py-3 border-2 border-gray-300 rounded-lg font-mono text-sm text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-400 outline-none resize-none bg-white shadow-sm"
-              placeholder="Enter your SQL query here..."
-              spellCheck={false}
-            />
+            <div className="relative">
+              <textarea
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                style={{ height: `${queryBoxHeight}px` }}
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg font-mono text-sm text-gray-900 focus:ring-2 focus:ring-primary-500 focus:border-primary-400 outline-none resize-y bg-white shadow-sm"
+                placeholder="Enter your SQL query here..."
+                spellCheck={false}
+              />
+              <div className="absolute bottom-2 right-2 text-xs text-gray-400 pointer-events-none flex items-center gap-1">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                </svg>
+                Drag to resize
+              </div>
+            </div>
           </div>
 
           {/* Results Area */}
