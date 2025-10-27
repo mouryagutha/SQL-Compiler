@@ -218,19 +218,6 @@ export default function AuthPage({ onLogin }: AuthPageProps) {
             </svg>
             {loading ? 'Signing in...' : 'Sign in with Google'}
           </button>
-
-          <div className="mt-6 text-center text-sm text-gray-600">
-            <p className="flex items-center justify-center gap-2">
-              <span className="inline-block w-2 h-2 bg-green-500 rounded-full"></span>
-              Powered by Firebase Authentication
-            </p>
-            <p className="text-xs mt-2">Create a new account to get started</p>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="mt-8 text-center text-sm text-gray-600">
-          <p>Built with Next.js, Firebase, and SQLite</p>
         </div>
       </div>
     </div>
