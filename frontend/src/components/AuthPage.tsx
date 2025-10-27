@@ -218,6 +218,37 @@ export default function AuthPage({ onLogin }: AuthPageProps) {
             </svg>
             {loading ? 'Signing in...' : 'Sign in with Google'}
           </button>
+
+          {/* Helper Text */}
+          <div className="mt-6 text-center text-sm text-gray-600">
+            {isLogin ? (
+              <p>
+                Don&apos;t have an account?{' '}
+                <button
+                  onClick={() => {
+                    setIsLogin(false);
+                    setError('');
+                  }}
+                  className="text-primary-600 hover:text-primary-700 font-semibold hover:underline"
+                >
+                  Sign Up
+                </button>
+              </p>
+            ) : (
+              <p>
+                Already have an account?{' '}
+                <button
+                  onClick={() => {
+                    setIsLogin(true);
+                    setError('');
+                  }}
+                  className="text-primary-600 hover:text-primary-700 font-semibold hover:underline"
+                >
+                  Login
+                </button>
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
