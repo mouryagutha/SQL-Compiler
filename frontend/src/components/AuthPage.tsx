@@ -113,11 +113,11 @@ export default function AuthPage({ onLogin }: AuthPageProps) {
         </div>
         <div className="absolute bottom-20 left-10 text-purple-200 opacity-20 font-mono text-sm transform -rotate-12">
           INSERT INTO orders<br/>
-          VALUES (1, 'Product');
+          VALUES (1, &apos;Product&apos;);
         </div>
         <div className="absolute top-1/2 right-10 text-pink-200 opacity-20 font-mono text-sm transform rotate-6">
           UPDATE customers<br/>
-          SET status = 'active';
+          SET status = &apos;active&apos;;
         </div>
         
         {/* Database Icons */}
