@@ -91,8 +91,38 @@ export default function AuthPage({ onLogin }: AuthPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-100 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Floating Circles */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+        
+        {/* SQL Code Pattern */}
+        <div className="absolute top-10 right-20 text-primary-200 opacity-20 font-mono text-sm transform rotate-12">
+          SELECT * FROM users;<br/>
+          WHERE active = true;
+        </div>
+        <div className="absolute bottom-20 left-10 text-purple-200 opacity-20 font-mono text-sm transform -rotate-12">
+          INSERT INTO orders<br/>
+          VALUES (1, 'Product');
+        </div>
+        <div className="absolute top-1/2 right-10 text-pink-200 opacity-20 font-mono text-sm transform rotate-6">
+          UPDATE customers<br/>
+          SET status = 'active';
+        </div>
+        
+        {/* Database Icons */}
+        <div className="absolute top-1/4 left-1/4 text-primary-300 opacity-30">
+          <Database className="w-16 h-16 animate-pulse" />
+        </div>
+        <div className="absolute bottom-1/4 right-1/4 text-purple-300 opacity-30">
+          <Database className="w-12 h-12 animate-pulse animation-delay-1000" />
+        </div>
+      </div>
+
+      <div className="max-w-md w-full relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-600 rounded-2xl mb-4">
