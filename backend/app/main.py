@@ -15,7 +15,7 @@ from app.models import (
 from app.database import (
     execute_query, get_table_names, get_table_info,
     create_user, get_user_by_username, save_query_history,
-    get_user_query_history, ensure_database_exists
+    get_user_query_history, ensure_database_exists, get_db_connection
 )
 from app.auth import (
     verify_password, get_password_hash, create_access_token,
@@ -221,6 +221,43 @@ async def get_query_history(
     ]
     
     return {"queries": queries}
+
+
+# ============================================================================
+# Database Reset Endpoint
+# ============================================================================
+
+@app.post("/api/database/reset")
+async def reset_database():
+    """
+    Reset the three main tables (Customers, Orders, Shippings) to original state
+    """
+    try:
+        import setup_database
+        
+        # Get database connection
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            
+            # Drop the three main tables
+            cursor.execute("DROP TABLE IF EXISTS Customers")
+            cursor.execute("DROP TABLE IF EXISTS Orders")
+            cursor.execute("DROP TABLE IF EXISTS Shippings")
+            conn.commit()
+        
+        # Recreate tables with original data by running setup
+        setup_database.setup_database()
+        
+        return {
+            "success": True,
+            "message": "Database tables reset successfully",
+            "tables_reset": ["Customers", "Orders", "Shippings"]
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": f"Failed to reset database: {str(e)}"
+        }
 
 
 # ============================================================================

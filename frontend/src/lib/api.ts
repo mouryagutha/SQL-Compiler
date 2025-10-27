@@ -110,6 +110,13 @@ export const tableAPI = {
   },
 };
 
+export const databaseAPI = {
+  reset: async (): Promise<{ success: boolean; message?: string; error?: string }> => {
+    const response = await api.post('/api/database/reset');
+    return response.data;
+  },
+};
+
 // Error handler
 export const handleAPIError = (error: unknown): string => {
   if (axios.isAxiosError(error)) {

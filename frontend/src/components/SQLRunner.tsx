@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { queryAPI, tableAPI, handleAPIError, type QueryHistory, type TableInfo } from '@/lib/api';
+import { queryAPI, tableAPI, databaseAPI, handleAPIError, type QueryHistory, type TableInfo } from '@/lib/api';
 import { firebaseAuth } from '@/lib/firebase';
-import { Play, LogOut, Database, Clock, AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
+import { Play, LogOut, Database, Clock, AlertCircle, CheckCircle, Loader2, RotateCcw } from 'lucide-react';
 import TableExplorer from './TableExplorer';
 import QueryHistoryPanel from './QueryHistoryPanel';
 import ResultsTable from './ResultsTable';
@@ -148,6 +148,40 @@ export default function SQLRunner({ onLogout }: SQLRunnerProps) {
     setShowHistory(false);
   };
 
+  const handleResetDatabase = async () => {
+    if (!confirm('Are you sure you want to reset all tables (Customers, Orders, Shippings) to their original state? This will remove all modifications!')) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await databaseAPI.reset();
+      if (response.success) {
+        setResults({
+          success: true,
+          data: [{ message: response.message || 'Database reset successfully' }],
+          columns: ['message'],
+          row_count: 1
+        });
+        // Clear selected table to refresh
+        setSelectedTable(null);
+      } else {
+        setResults({
+          success: false,
+          error: response.error || 'Failed to reset database'
+        });
+      }
+    } catch (error) {
+      const errorMsg = handleAPIError(error);
+      setResults({
+        success: false,
+        error: errorMsg
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 flex flex-col">
       {/* Header */}
@@ -163,6 +197,15 @@ export default function SQLRunner({ onLogout }: SQLRunnerProps) {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              onClick={handleResetDatabase}
+              disabled={loading}
+              className="flex items-center gap-2 px-4 py-2 text-orange-600 hover:bg-orange-50 rounded-lg transition-colors border border-orange-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              title="Reset Customers, Orders, and Shippings tables"
+            >
+              <RotateCcw className="w-4 h-4" />
+              Reset Tables
+            </button>
             <button
               onClick={() => setShowHistory(!showHistory)}
               className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
